@@ -39,7 +39,8 @@ public final class ImFontGlyphRangesBuilder {
     }
 
     /**
-     * Copies all given ranges to resulting ranges
+     * Copies all given ranges to resulting ranges.
+     * Short values are treated as unsigned 16-bit integers.
      */
     public void addRanges(final short[] ranges) {
         for (int i = 0; i < ranges.length; i += 2) {
@@ -47,7 +48,9 @@ public final class ImFontGlyphRangesBuilder {
                 break;
             }
 
-            for (int k = ranges[i]; k <= ranges[i + 1]; k++) {
+            final int start = ranges[i] & 0xFFFF;
+            final int end = ranges[i + 1] & 0xFFFF;
+            for (int k = start; k <= end; k++) {
                 addChar((char) k);
             }
         }
